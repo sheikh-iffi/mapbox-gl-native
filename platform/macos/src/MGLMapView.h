@@ -1023,6 +1023,7 @@ MGL_EXPORT IB_DESIGNABLE
  */
 - (NSPoint)convertCoordinate:(CLLocationCoordinate2D)coordinate toPointToView:(nullable NSView *)view;
 
+- (CLLocationCoordinate2D)projectCoordinate:(CLLocationCoordinate2D)coordinate atZoomLevel:(double)zoomLevel;
 /**
  Converts a point in the given view’s coordinate system to a geographic
  coordinate.

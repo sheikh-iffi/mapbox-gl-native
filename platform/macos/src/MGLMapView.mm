@@ -2672,6 +2672,10 @@ public:
     }
     return [self convertLatLng:MGLLatLngFromLocationCoordinate2D(coordinate) toPointToView:view];
 }
+- (CLLocationCoordinate2D)projectCoordinate:(CLLocationCoordinate2D)coordinate atZoomLevel:(double)zoomLevel {
+    mbgl::Point<double> projectCoordinate = mbgl::Projection::project(MGLLatLngFromLocationCoordinate2D(coordinate), std::pow(2.0, zoomLevel));
+    return CLLocationCoordinate2DMake(projectCoordinate.y, projectCoordinate.x);
+}
 
 /// Converts a geographic coordinate to a point in the view’s coordinate system.
 - (NSPoint)convertLatLng:(mbgl::LatLng)latLng toPointToView:(nullable NSView *)view {
