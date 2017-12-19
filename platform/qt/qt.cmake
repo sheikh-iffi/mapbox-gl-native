@@ -68,6 +68,8 @@ add_library(qmapboxgl SHARED
 
 target_include_directories(qmapboxgl
     PUBLIC platform/qt/include
+    PRIVATE mason_packages/headers/tao/28626e9/include
+    PRIVATE mason_packages/headers/optional/5f08e2e/include
 )
 
 target_link_libraries(qmapboxgl
@@ -124,6 +126,16 @@ elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
         )
     endif()
 elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+    add_definitions("-D_WINDOWS")
+    add_definitions("-DQT_COMPILING_QIMAGE_COMPAT_CPP")
+    add_definitions("-DDRAPIDJSON_HAS_STDSTRING")
+    add_definitions("-DRAPIDJSON_HAS_CXX11_RVALUE_REFS")
+    add_definitions("-D_USE_MATH_DEFINES")
+
+    add_definitions("-Wno-unknown-argument")
+    add_definitions("-Wno-unused-private-field")
+    add_definitions("-Wno-unused-command-line-argument")
+
     list(APPEND MBGL_QT_CORE_FILES
         PRIVATE platform/qt/src/thread.cpp
     )
