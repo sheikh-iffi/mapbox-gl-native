@@ -2,7 +2,7 @@ package com.mapbox.mapboxsdk.testapp.utils;
 
 import android.support.annotation.NonNull;
 
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 import timber.log.Timber;
 
@@ -13,9 +13,10 @@ public class OfflineUtils {
 
   public static String convertRegionName(@NonNull byte[] metadata) {
     try {
+      JsonObject jsonObject = new JsonObject();
       String json = new String(metadata, JSON_CHARSET);
-      JSONObject jsonObject = new JSONObject(json);
-      return jsonObject.getString(JSON_FIELD_REGION_NAME);
+      jsonObject.addProperty(JSON_FIELD_REGION_NAME, json);
+      return jsonObject.getAsString();
     } catch (Exception exception) {
       return null;
     }
@@ -24,9 +25,9 @@ public class OfflineUtils {
   public static byte[] convertRegionName(String regionName) {
     byte[] metadata = null;
     try {
-      JSONObject jsonObject = new JSONObject();
-      jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
-      String json = jsonObject.toString();
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.addProperty(JSON_FIELD_REGION_NAME, regionName);
+      String json = jsonObject.getAsString();
       metadata = json.getBytes(JSON_CHARSET);
     } catch (Exception exception) {
       Timber.e(exception, "Failed to encode metadata: ");
